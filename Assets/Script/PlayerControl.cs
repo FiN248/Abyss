@@ -58,7 +58,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     void PlayerJump()
-    {
+    {   
         if (isGround)
         {
             playerJumpCount = 1;
