@@ -51,9 +51,9 @@ public class LaserTur : MonoBehaviour
     void UpdateLaser(){
         var mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
 
+        transform.position = firepoint.position;
         lineRenderer.SetPosition(0,firepoint.position);
         startVFX.transform.position = (Vector2)firepoint.position;
-
         lineRenderer.SetPosition(1, mousePos);
 
         Vector2 direction = mousePos - (Vector2)transform.position;
@@ -76,8 +76,11 @@ public class LaserTur : MonoBehaviour
 
     void RotateToMouse(){
         Vector2 direction = cam.ScreenToWorldPoint(Input.mousePosition);
+        
         float angle = Mathf.Atan2(direction.y , direction.x) * Mathf.Rad2Deg;
+
         rotation.eulerAngles = new Vector3(0,0,angle);
+
         transform.rotation = rotation;
     }
 
