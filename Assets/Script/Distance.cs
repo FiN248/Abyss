@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fungus;
 
 public class Distance : MonoBehaviour
 {   
@@ -12,6 +13,8 @@ public class Distance : MonoBehaviour
     public GameObject RoadLamp2;
     public GameObject RoadLamp3;
     public GameObject RoadLamp4;
+    public GameObject Statue;
+    public Flowchart Variables;
     public Camera cam;
     public int a;
     private float main_time;
@@ -19,7 +22,7 @@ public class Distance : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Variables = GameObject.Find("Variables").GetComponent<Flowchart>();
     }
 
     // Update is called once per frame
@@ -32,31 +35,44 @@ public class Distance : MonoBehaviour
 
         if(GetRoadLampDistance1(RoadLamp1) <= 1.5 && isHit() && MouceLongPressLeft()){
             litOn(RoadLamp1);
+            Variables.SetBooleanVariable("Lamp1",true);
         }
         if(GetRoadLampDistance2(RoadLamp1) <= 1.5 && isHit() && MouceLongPressRight()){
             litOff(RoadLamp1);
+            Variables.SetBooleanVariable("Lamp1",false);
         }
 
         if(GetRoadLampDistance1(RoadLamp2) <= 1.5 && isHit() && MouceLongPressLeft()){
             litOn(RoadLamp2);
+            Variables.SetBooleanVariable("Lamp2",true);
         }
         if(GetRoadLampDistance2(RoadLamp2) <= 1.5 && isHit() && MouceLongPressRight()){
             litOff(RoadLamp2);
+            Variables.SetBooleanVariable("Lamp2",false);
         }
 
         if(GetRoadLampDistance1(RoadLamp3) <= 1.5 && isHit() && MouceLongPressLeft()){
             litOn(RoadLamp3);
+            Variables.SetBooleanVariable("Lamp3",true);
         }
         if(GetRoadLampDistance2(RoadLamp3) <= 1.5 && isHit() && MouceLongPressRight()){
             litOff(RoadLamp3);
+            Variables.SetBooleanVariable("Lamp3",false);
         }
 
         if(GetRoadLampDistance1(RoadLamp4) <= 1.5 && isHit() && MouceLongPressLeft()){
             litOn(RoadLamp4);
+            Variables.SetBooleanVariable("Lamp4",true);
         }
         if(GetRoadLampDistance2(RoadLamp4) <= 1.5 && isHit() && MouceLongPressRight()){
             litOff(RoadLamp4);
+            Variables.SetBooleanVariable("Lamp4",false);
         }
+
+        if (GetStatueDistance() <= 1.5 && isHit() && MouceLongPressLeft()){
+            Variables.SetBooleanVariable("Statue2Key",true);
+        }
+
     }
 
     float GetDistance(){
@@ -102,6 +118,21 @@ public class Distance : MonoBehaviour
 
     }
 
+    float GetStatueDistance(){
+        float result = 99999;
+
+        if( Statue != null && Laserend != null){
+            Vector2 position1 = Statue.transform.position;
+            Vector2 position2 = Laserend.transform.position;
+
+            float _distance = Vector2.Distance(position1, position2);
+
+            result = _distance;
+        }
+
+        return result;
+    }
+
     float GetRoadLampDistance2(GameObject RoadLamp){
         float result = 99999;
         if(RoadLamp != null && Laserend != null){
@@ -116,6 +147,8 @@ public class Distance : MonoBehaviour
         return result;
 
     }
+
+    
     
     void litOn(GameObject RoadLamp){
         RoadLamp.transform.Find("Road Lamp Light On").GetComponent<SpriteRenderer>().sortingOrder=1;
